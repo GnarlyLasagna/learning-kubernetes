@@ -1,4 +1,4 @@
-# learning-kubernetes
+# essential notes from learning-kubernetes on Boot.Dev
 
 Install kubectl
 ```
@@ -21,3 +21,33 @@ run this to open a browser window with a locally hosted dashboard for your clust
 ```
 minikube dashboard
 ```
+
+this command will create a "deployment" for us
+```
+kubectl create deployment
+```
+```
+kubectl create deployment synergychat-web --image=lanecwagner/synergychat-web:latest
+```
+
+To make sure the deployment was successful, run:
+```
+kubectl get deployments
+```
+
+In order to access the application from your local network, you'll need to use kubectl to do some port forwarding. First, run:
+```
+kubectl get pods
+```
+
+You should see something like this:
+```
+NAME                                   READY   STATUS    RESTARTS   AGE
+synergychat-web-679cbcc6cd-cq6vx       1/1     Running   0          20m
+```
+next run 
+```
+kubectl port-forward PODNAME 8080:8080
+```
+Be sure to replace PODNAME with your pod's name. In my case, it was synergychat-web-679cbcc6cd-cq6vx
+
