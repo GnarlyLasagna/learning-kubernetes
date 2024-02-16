@@ -51,3 +51,27 @@ kubectl port-forward PODNAME 8080:8080
 ```
 Be sure to replace PODNAME with your pod's name. In my case, it was synergychat-web-679cbcc6cd-cq6vx
 
+Take a look at the YAML file for your current deployment in the CLI:
+```
+kubectl get deployment synergychat-web -o yaml
+```
+
+Edit the deployment and change the number of replicas from 2 to 10:
+```
+kubectl edit deployment synergychat-web
+```
+
+Make sure you've got 10 pods running:
+```
+kubectl get pod
+```
+
+Keep using kubectl get pod to check on your pods until all 10 are in a "ready" state. Once they are, run:
+```
+kubectl proxy
+```
+
+Let's take a look at the ReplicaSets that are running in your cluster:
+```
+kubectl get replicasets
+```
