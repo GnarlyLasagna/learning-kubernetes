@@ -75,3 +75,4 @@ Let's take a look at the ReplicaSets that are running in your cluster:
 ```
 kubectl get replicasets
 ```
+
