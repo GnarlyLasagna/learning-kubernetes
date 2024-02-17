@@ -101,3 +101,17 @@ Then open it in your text editor. There are 5 top-level fields in the file:
 ```
 kubectl apply -f web-deployment.yaml
 ```
+
+You should get a warning that lets you know that you're missing the last-applied-configuration annotation. That's okay! we got that warning because we created this deployment the quick and dirty way, by using kubectl create deployment instead of creating a YAML file and using kubectl apply -f
+
+However, because we've now updated it with kubectl apply, the annotation is now there, and we won't get the warning again.
+
+Download the YAML file again and take a look at it. You should see the annotation now.
+
+Apply the configuration a second time, you won't get the warning. Save this YAML file in a git repo for this course! We'll be making more configuration files. Kubernetes is an "infra-as-code" tool, so it's important to keep your configuration files in a git repo.
+
+Finally, start the proxy server:
+```
+kubectl proxy
+```
+
