@@ -76,3 +76,14 @@ Let's take a look at the ReplicaSets that are running in your cluster:
 kubectl get replicasets
 ```
 
+Let's take a look at the ReplicaSets that are running in your cluster:
+```
+kubectl get replicasets
+```
+Just like with pods, notice that we never directly created the replica set. We created a deployment, and the deployment created the replica set.
+
+
+download a copy of your deployment's YAML file and save it in your current directory:
+```
+kubectl get deployment synergychat-web -o yaml > web-deployment.yaml
+```
