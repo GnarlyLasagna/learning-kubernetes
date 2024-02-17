@@ -13,7 +13,7 @@ metadata:
   uid: 9f608649-aea7-42df-b1dc-ab3df08ab13a
 spec:
   progressDeadlineSeconds: 600
-  replicas: 10
+  replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -58,5 +58,5 @@ status:
     type: Available
   observedGeneration: 3
   readyReplicas: 10
-  replicas: 10
+  replicas: 3
   updatedReplicas: 10

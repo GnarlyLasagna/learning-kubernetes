@@ -115,3 +115,18 @@ Finally, start the proxy server:
 kubectl proxy
 ```
 
+Let's write a deployment from scratch.
+
+Feel free to reference the k8s docs here as you go for examples of the proper structure.
+
+Create a new file called api-deployment.yaml.
+Add the apiVersion and kind fields. The apiVersion is apps/v1 and, since this is a deployment, the kind is Deployment.
+Add a metadata/name field, and let's name our deployment synergychat-api for consistency.
+Add a metadata/labels/app field, and also set it to synergychat-api. This will be used to select the pods that this deployment manages.
+Add a spec/replicas field and let's set it to 1. We can always scale up to more pods later.
+Add a spec/selector/matchLabels/app field and set it to synergychat-api. This should match the label we set in step 4.
+Add a spec/template/metadata/labels/app field and set it to synergychat-api. Again, this should match the label we set in step 4. Labels are important because they're how Kubernetes knows which pods belong to which deployments.
+Add a spec/template/spec/containers field. This actually contains a list of containers that will be deployed:
+Note: A hyphen is how you denote a list item in yaml
+Set the name of the container to synergychat-api.
+Set the image to lanecwagner/synergychat-api:latest. This tells k8s where to download the Docker image from.
