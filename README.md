@@ -130,3 +130,61 @@ Add a spec/template/spec/containers field. This actually contains a list of cont
 Note: A hyphen is how you denote a list item in yaml
 Set the name of the container to synergychat-api.
 Set the image to lanecwagner/synergychat-api:latest. This tells k8s where to download the Docker image from.
+
+CREATE THE DEPLOYMENT
+```
+kubectl apply -f api-deployment.yaml
+```
+
+Next, take a look at all the pods you have running now. You should see pods for the web service and a pod for the api service.
+
+However, you might notice that the api pod isn't in a "ready" state. In fact, it should be stuck in a "CrashLoopBackOff" status. Oh no! We've created a thrashing pod!
+
+Run:
+```
+kubectl proxy
+```
+
+## CONFIG MAPS
+There are several ways to manage environment variables in Kubernetes. One of the most common ways is to use ConfigMaps. ConfigMaps allow us to decouple our configurations from our container images, which is important because we don't want to have to rebuild our images every time we want to change a configuration value.
+
+In a Dockerfile we can set environment variables like this:
+
+```
+ENV PORT=3000
+```
+Copy icon
+The trouble is, that means that everyone using that image will have to use port 3000. It also means that if we want to change the port, we have to rebuild the image.
+
+ASSIGNMENT
+First, let's take a closer look at our crashing pod and try to figure out why it's crashing.
+
+kubectl get pods
+Copy icon
+Copy the pod name and then get the logs:
+
+```
+kubectl logs <pod-name>
+```
+Copy icon
+You should see that a specific environment variable is missing! Let's fix that.
+
+Create a new file. Let's call it api-configmap.yaml. Add the following YAML to it:
+
+apiVersion: v1
+kind: ConfigMap
+metadata/name: synergychat-api-configmap
+data/API_PORT: "8080"
+Next, apply the config map:
+
+```
+kubectl apply -f api-configmap.yaml
+```
+Now, we haven't yet connected the config map to our pod, so it should still be crashing. However, for now, let's just validate that the config map was created successfully:
+```
+kubectl get configmaps
+```
+Run:
+```
+kubectl proxy
+```
