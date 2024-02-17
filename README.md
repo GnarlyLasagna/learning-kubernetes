@@ -87,3 +87,17 @@ download a copy of your deployment's YAML file and save it in your current direc
 ```
 kubectl get deployment synergychat-web -o yaml > web-deployment.yaml
 ```
+
+Then open it in your text editor. There are 5 top-level fields in the file:
+
+ - apiVersion: apps/v1 - Specifies the version of the Kubernetes API you're using to create the object (e.g., apps/v1 for Deployments).
+ - kind: Deployment - Specifies the type of object you're configuring
+ - metadata - Metadata about the deployment, like when it was created, its name, and its ID
+ - spec - The desired state of the deployment. Most impactful edits, like how many replicas you want, will be made here.
+ - status - The current state of the deployment. You won't edit this directly, it's just for you to see what's going on with your deployment.
+ - Inside your editor, change the number of replicas to 3 and save the file. Notice that you're just editing a file on your machine! It won't yet have any effect on the deployment in your cluster.
+
+ To apply the changes, run:
+```
+kubectl apply -f web-deployment.yaml
+```
