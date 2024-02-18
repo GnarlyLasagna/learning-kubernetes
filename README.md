@@ -188,3 +188,47 @@ Run:
 ```
 kubectl proxy
 ```
+
+
+## CRAWLER
+We've got one last application to deploy to our cluster: the crawler. This is an application that continuously crawls Project Gutenberg and exposes the juicy data that it finds via a JSON API.
+
+## ASSIGNMENT
+ADD A NEW CONFIG MAP
+Create a copy of your api-configmap.yaml file and call it crawler-configmap.yaml. We're going to make a few changes to it.
+
+Name it synergychat-crawler-configmap instead of synergychat-api-configmap.
+Remove the API_PORT environment variable.
+Add some new environment variables:
+ - CRAWLER_PORT: "8080"
+ - CRAWLER_KEYWORDS: love,hate,joy,sadness,anger,disgust,fear,surprise
+It's okay that the CRAWLER_PORT in the crawler deployment is the same as the API_PORT in the api deployment. They're in different pods, and these are pod-internal ports.
+
+Here's a [reference](https://github.com/bootdotdev/synergychat/tree/main#crawler-services) to the docs for the SynergyChat microservices on GitHub in case you want additional info about the crawler.
+
+Deploy the config map:
+
+```
+kubectl apply -f crawler-configmap.yaml
+```
+ADD A NEW DEPLOYMENT
+Create a copy of your api-deployment.yaml file and call it crawler-deployment.yaml. We're going to make a few changes to it.
+
+Update all synergychat-api references to synergychat-crawler.
+Update the image URL to lanecwagner/synergychat-crawler:latest.
+Update the environment variable references to match the new config map.
+
+Once you've updated the deployment, apply it:
+
+```
+kubectl apply -f crawler-deployment.yaml
+```
+
+If the pod isn't "ready", check the logs to see if there's an error. If the error is related to environment variables, debug your config map and deployment files and reapply them.
+
+Once it's ready, forward the pod's 8080 port to your local machine:
+
+```
+kubectl port-forward <pod-name> 8080:8080
+```
+
