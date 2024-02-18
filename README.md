@@ -232,3 +232,20 @@ Once it's ready, forward the pod's 8080 port to your local machine:
 kubectl port-forward <pod-name> 8080:8080
 ```
 
+Take a look at the yaml that describes your web-service.
+
+```
+kubectl get svc web-service -o yaml
+```
+"svc" is a short-hand alias for "service", either will work in kubectl.
+
+You should see a section that looks like this:
+
+```
+spec:
+  clusterIP: 10.96.213.234
+  ...
+  type: ClusterIP
+```
+
+We didn't specify a service type! Why is this here? Well, it's because ClusterIP is the default service type.
