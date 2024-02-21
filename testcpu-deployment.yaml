@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: synergychat-testcpu
+  name: synergychat-testcpu
+spec:
+  selector:
+    matchLabels:
+      app: synergychat-testcpu
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: synergychat-testcpu
+    spec:
+      containers:
+      - image: lanecwagner/synergychat-testcpu:latest
+        name: synergychat-testcpu
+        resources: 
+          limits:
+            cpu: 10m
+status: {}

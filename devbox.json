@@ -1,0 +1,30 @@
+{
+  "packages": [
+    "minikube",
+    "kubernetes-helm-wrapped",
+  ],
+  "env": {
+    "MINIKUBE_HOME": "$PWD/home/.minkube",
+    "KUBECONFIG":    "$PWD/home/.kube/config",
+  },
+  "shell": {
+    "init_hook": [
+      "alias kn=\"kubectl config set-context --current --namespace \"",
+      "export do=\"--dry-run=client -o yaml\"",
+      "export now=\"--force --grace-period 0\"",
+      "helm repo add my-repo https://charts.bitnami.com/bitnami",
+    ],
+    "scripts": {
+      "minikube": [
+        "finish() { minikube stop; }",
+        "trap finish SIGTERM SIGINT EXIT",
+        //"minikube start --container-runtime cri-o",
+        //"minikube start --container-runtime containerd",
+        //"minikube start",
+        "minikube start --extra-config \"apiserver.cors-allowed-origins=[\"http://boot.dev\"]\"",
+        "minikube dashboard",
+        "minikube logs -f",
+      ],
+    },
+  },
+}
